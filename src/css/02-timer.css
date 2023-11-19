@@ -1,0 +1,18 @@
+.timer {
+  display: flex;
+  gap: 32px;
+  margin-top: 64px;
+}
+
+.value {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.label {
+  display: block;
+  text-align: center;
+  color: rgb(136, 56, 56);
+}
