@@ -1,8 +1,4 @@
-function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, 0)}`;
-}
+import { getRandomHexColor } from './helpers';
 
 const elements = {
   body: document.querySelector('body'),
@@ -10,10 +6,10 @@ const elements = {
   stopBtn: document.querySelector('[data-stop]'),
 };
 
-let intervalId;
-
 elements.startBtn.addEventListener('click', startColorChange);
 elements.stopBtn.addEventListener('click', stopColorChange);
+
+let intervalId;
 
 function startColorChange() {
   intervalId = setInterval(() => {
@@ -24,5 +20,5 @@ function startColorChange() {
 
 function stopColorChange() {
   clearInterval(intervalId);
-  elements.startBtn.removeAttribute('disabled', false);
+  elements.startBtn.removeAttribute('disabled');
 }
