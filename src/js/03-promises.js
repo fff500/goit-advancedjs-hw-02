@@ -26,26 +26,26 @@ function handleSubmit(event) {
   const formDataObj = {};
 
   for (let [key, value] of formData.entries()) {
-    formDataObj[key] = value;
+    formDataObj[key] = Number(value);
   }
 
   const { delay, step, amount } = formDataObj;
 
-  setTimeout(() => {
-    for (let i = 0; i < amount; i++) {
-      createPromise(i, i * step)
-        .then(({ position, delay }) => {
-          iziToast.success({
-            message: `✅ Fulfilled promise ${position} in ${delay}ms`,
-            color: 'green',
-          });
-        })
-        .catch(({ position, delay }) => {
-          iziToast.error({
-            message: `❌ Rejected promise ${position} in ${delay}ms`,
-            color: 'red',
-          });
+  for (let i = 0; i < amount; i++) {
+    createPromise(i + 1, delay + i * step)
+      .then(({ position, delay }) => {
+        iziToast.success({
+          message: `✅ Fulfilled promise ${position} in ${delay}ms`,
+          color: 'green',
         });
-    }
-  }, delay);
+      })
+      .catch(({ position, delay }) => {
+        iziToast.error({
+          message: `❌ Rejected promise ${position} in ${delay}ms`,
+          color: 'red',
+        });
+      });
+  }
+
+  form.reset();
 }

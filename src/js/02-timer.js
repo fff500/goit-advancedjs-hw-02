@@ -8,6 +8,7 @@ import { convertMs, addLeadingZero } from './helpers';
 
 const elements = {
   startBtn: document.querySelector('[data-start]'),
+  dateInput: document.querySelector('#datetime-picker'),
   daysSpan: document.querySelector('[data-days]'),
   hoursSpan: document.querySelector('[data-hours]'),
   minutesSpan: document.querySelector('[data-minutes]'),
@@ -35,12 +36,15 @@ const options = {
   },
 };
 
-flatpickr('#datetime-picker', options);
+let flatpickrInstance = flatpickr('#datetime-picker', options);
 
 elements.startBtn.setAttribute('disabled', true);
 elements.startBtn.addEventListener('click', startCountdown);
 
 function startCountdown() {
+  elements.startBtn.setAttribute('disabled', true);
+  elements.dateInput.setAttribute('disabled', true);
+  flatpickrInstance.destroy();
   const intervalId = setInterval(() => {
     const { days, hours, minutes, seconds } = convertMs(
       selectedDate - Date.now()
@@ -51,6 +55,9 @@ function startCountdown() {
     elements.secondsSpan.textContent = addLeadingZero(seconds);
 
     if (selectedDate - Date.now() <= 0) {
+      elements.startBtn.removeAttribute('disabled');
+      elements.dateInput.removeAttribute('disabled');
+      flatpickrInstance = flatpickr('#datetime-picker', options);
       clearInterval(intervalId);
       elements.daysSpan.textContent = '00';
       elements.hoursSpan.textContent = '00';
